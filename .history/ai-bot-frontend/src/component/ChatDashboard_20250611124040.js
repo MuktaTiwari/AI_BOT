@@ -4,7 +4,7 @@ import { BsThreeDotsVertical, BsEmojiSmile, BsPaperclip } from 'react-icons/bs';
 import { IoMdNotifications } from 'react-icons/io';
 import { useRef } from 'react';
 
-import '../style/ChatDashboard.css'
+im
 const ChatDashboard = () => {
   // State management
   const [messages, setMessages] = useState([]);

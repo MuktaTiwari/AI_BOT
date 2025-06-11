@@ -3,7 +3,7 @@ import { FiMessageSquare, FiUsers, FiSettings, FiSend } from 'react-icons/fi';
 import { IoMdNotifications } from 'react-icons/io';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 
-import '../style/LandingPage.css'
+import '../style/'
 const LandingPage = () => {
   return (
     <div className="landing-page">
