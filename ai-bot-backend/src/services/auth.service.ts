@@ -22,7 +22,6 @@ class AuthService {
 
     return createUserData;
   }
-
   public async login(userData: CreateUserDto): Promise<{ cookie: string; findUser: IUser }> {
     if (isEmpty(userData)) throw new HttpException(400, "userData is empty");
 
