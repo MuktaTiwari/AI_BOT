@@ -4,29 +4,29 @@ import { SECRET_KEY } from '@config';
 import { CreateUserDto } from '@dtos/users.dto';
 import { HttpException } from '@exceptions/HttpException';
 import { DataStoredInToken, TokenData } from '@interfaces/auth.interface';
-import { User } from '@interfaces/users.interface';
+import { IUser } from '@interfaces/users.interface';
 import userModel from '@models/users.model';
 import { isEmpty } from '@utils/util';
 
 class AuthService {
   public users = userModel;
 
-  public async signup(userData: CreateUserDto): Promise<User> {
+  public async signup(userData: CreateUserDto): Promise<IUser> {
     if (isEmpty(userData)) throw new HttpException(400, "userData is empty");
 
-    const findUser: User = await this.users.findOne({ email: userData.email });
+    const findUser: IUser = await this.users.findOne({ email: userData.email });
     if (findUser) throw new HttpException(409, `This email ${userData.email} already exists`);
 
     const hashedPassword = await hash(userData.password, 10);
-    const createUserData: User = await this.users.create({ ...userData, password: hashedPassword });
+    const createUserData: IUser = await this.users.create({ ...userData, password: hashedPassword });
 
     return createUserData;
   }
 
-  public async login(userData: CreateUserDto): Promise<{ cookie: string; findUser: User }> {
+  public async login(userData: CreateUserDto): Promise<{ cookie: string; findUser: IUser }> {
     if (isEmpty(userData)) throw new HttpException(400, "userData is empty");
 
-    const findUser: User = await this.users.findOne({ email: userData.email });
+    const findUser: IUser = await this.users.findOne({ email: userData.email });
     if (!findUser) throw new HttpException(409, `This email ${userData.email} was not found`);
 
     const isPasswordMatching: boolean = await compare(userData.password, findUser.password);
@@ -38,16 +38,16 @@ class AuthService {
     return { cookie, findUser };
   }
 
-  public async logout(userData: User): Promise<User> {
+  public async logout(userData: IUser): Promise<IUser> {
     if (isEmpty(userData)) throw new HttpException(400, "userData is empty");
 
-    const findUser: User = await this.users.findOne({ email: userData.email, password: userData.password });
+    const findUser: IUser = await this.users.findOne({ email: userData.email, password: userData.password });
     if (!findUser) throw new HttpException(409, `This email ${userData.email} was not found`);
 
     return findUser;
   }
 
-  public createToken(user: User): TokenData {
+  public createToken(user: IUser): TokenData {
     const dataStoredInToken: DataStoredInToken = { _id: user._id };
     const secretKey: string = SECRET_KEY;
     const expiresIn: number = 60 * 60;

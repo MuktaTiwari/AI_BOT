@@ -1,3 +1,4 @@
+import { Pool } from 'pg';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
@@ -5,11 +6,10 @@ import express from 'express';
 import helmet from 'helmet';
 import hpp from 'hpp';
 import morgan from 'morgan';
-import { connect, set, disconnect } from 'mongoose';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import { NODE_ENV, PORT, LOG_FORMAT, ORIGIN, CREDENTIALS } from '@config';
-import { dbConnection } from '@databases';
+import { dbConfig } from '@databases';
 import { Routes } from '@interfaces/routes.interface';
 import errorMiddleware from '@middlewares/error.middleware';
 import { logger, stream } from '@utils/logger';
@@ -18,12 +18,14 @@ class App {
   public app: express.Application;
   public env: string;
   public port: string | number;
+  public dbPool: Pool;
 
   constructor(routes: Routes[]) {
     this.app = express();
     this.env = NODE_ENV || 'development';
     this.port = PORT || 3000;
 
+    this.dbPool = new Pool(dbConfig);
     this.connectToDatabase();
     this.initializeMiddlewares();
     this.initializeRoutes(routes);
@@ -42,10 +44,10 @@ class App {
 
   public async closeDatabaseConnection(): Promise<void> {
     try {
-      await disconnect();
-      console.log('Disconnected from MongoDB');
+      await this.dbPool.end();
+      logger.info('Disconnected from PostgreSQL');
     } catch (error) {
-      console.error('Error closing database connection:', error);
+      logger.error('Error closing database connection:', error);
     }
   }
 
@@ -54,11 +56,15 @@ class App {
   }
 
   private async connectToDatabase() {
-    if (this.env !== 'production') {
-      set('debug', true);
+    try {
+      // Test the connection
+      const client = await this.dbPool.connect();
+      logger.info('Connected to PostgreSQL database');
+      client.release();
+    } catch (error) {
+      logger.error('Error connecting to PostgreSQL database:', error);
+      process.exit(1);
     }
-
-    await connect(dbConnection.url);
   }
 
   private initializeMiddlewares() {
@@ -70,6 +76,12 @@ class App {
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(cookieParser());
+    
+    // Add database pool to request object
+    this.app.use((req, res, next) => {
+      req.db = this.dbPool;
+      next();
+    });
   }
 
   private initializeRoutes(routes: Routes[]) {
