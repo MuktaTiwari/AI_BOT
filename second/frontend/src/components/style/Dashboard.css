@@ -190,17 +190,3 @@
   align-items: center;
   margin-bottom: 2rem;
 }
-
-.create-bot-button {
-  color: white;
-  border: 1px solid #6366f1;
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.create-bot-button:hover {
-  background-color: #4f46e5;
-}

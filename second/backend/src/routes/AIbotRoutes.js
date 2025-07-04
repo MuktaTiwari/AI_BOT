@@ -12,11 +12,8 @@ class AIbotRoutes {
     }
 
     initializeRoutes() {
-        this.router.post(
-            `/create`,
-            authenticateToken, // Add authentication middleware
-            this.AIbotController.createAIbot.bind(this.AIbotController)
-        );
+        this.router.post(`/create`,authenticateToken, this.AIbotController.createAIbot.bind(this.AIbotController));
+        this.router.get(`/bots`, authenticateToken, this.AIbotController.getAIbotList.bind(this.AIbotController));
     }
 }
 

@@ -1,0 +1,240 @@
+.app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #020617;
+    color: #e2e8f0;
+}
+
+.main-content {
+    display: flex;
+    flex: 1;
+}
+
+.content-area {
+    flex: 1;
+    margin-left: 250px;
+    margin-top: 70px;
+    min-height: calc(100vh - 70px);
+    width: calc(100% - 250px);
+}
+
+.bots-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 40px;
+    margin-top: 30px;
+}
+
+
+.create-bot-button {
+    color: white;
+    border: 1px solid #6366f1;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-right: 30px;
+}
+
+.create-bot-button:hover {
+    background-color: #4f46e5;
+}
+
+.loading,
+.error,
+.no-bots {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.2rem;
+    color: #94a3b8;
+}
+
+.error {
+    color: #ef4444;
+}
+
+.no-bots {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 3rem;
+}
+
+.no-bots p {
+    font-size: 1.2rem;
+    color: #94a3b8;
+}
+
+.bots-table-container {
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.bots-table-container h1 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: white;
+}
+
+.bots-table {
+    width: 96%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 1rem;
+    background-color: #1e293b;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    margin-left: 40px;
+}
+
+/* Rest of your existing table styles... */
+
+.bots-table th {
+    background-color: #334155;
+    color: #e2e8f0;
+    font-weight: 600;
+    padding: 1rem 1.5rem;
+    text-align: center;
+    border-bottom: 1px solid #475569;
+}
+
+.bots-table td {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #334155;
+    color: #cbd5e1;
+}
+
+.bots-table tr:last-child td {
+    border-bottom: none;
+}
+
+.bots-table tr:hover td {
+    background-color: #0f172a;
+}
+
+.messages-list,
+.urls-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.messages-list::-webkit-scrollbar,
+.urls-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.messages-list::-webkit-scrollbar-track,
+.urls-list::-webkit-scrollbar-track {
+    background: #1e293b;
+}
+
+.messages-list::-webkit-scrollbar-thumb,
+.urls-list::-webkit-scrollbar-thumb {
+    background-color: #475569;
+    border-radius: 3px;
+}
+
+.messages-list li,
+.urls-list li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #334155;
+}
+
+.messages-list li:last-child,
+.urls-list li:last-child {
+    border-bottom: none;
+}
+
+.urls-list a {
+    color: #60a5fa;
+    text-decoration: none;
+    word-break: break-all;
+    transition: color 0.2s;
+}
+
+.urls-list a:hover {
+    color: #3b82f6;
+    text-decoration: underline;
+}
+
+.actions-cell {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.view-btn,
+.edit-btn,
+.delete-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.view-btn,
+.edit-btn,
+.delete-btn {
+    border: solid 1px #6366f1;
+    color: white;
+    border-radius: 8px;
+}
+
+.view-btn:hover {
+    background-color: #1d4ed8;
+}
+
+.edit-btn:hover {
+    background-color: #047857;
+}
+
+
+.delete-btn:hover {
+    background-color: #b91c1c;
+}
+
+@media (max-width: 1024px) {
+    .content-area {
+        margin-left: 0;
+        width: 100%;
+        padding: 1rem;
+    }
+
+    .bots-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .messages-list,
+    .urls-list {
+        white-space: normal;
+    }
+}
+
+@media (max-width: 768px) {
+    .actions-cell {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .view-btn,
+    .edit-btn,
+    .delete-btn {
+        width: 100%;
+        padding: 0.5rem;
+    }
+}

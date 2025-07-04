@@ -1,14 +1,9 @@
 import { useState } from 'react';
 import Navbar from "../layouts/navbar";
 import Sidebar from "../layouts/sidebar";
-import CreateBotModal from './CreateBotModal';
 import './style/Dashboard.css';
-import { createAIbot } from '../api/auth'; // Add this import
-
 
 function Dashboard() {
-  const [showCreateBotModal, setShowCreateBotModal] = useState(false);
-
   const stats = [
     { title: "Total Bots", value: 5, change: "+2" },
     { title: "Active Conversations", value: 12, change: "+5" },
@@ -22,37 +17,6 @@ function Dashboard() {
     { name: "Tech Help", lastActive: "3 days ago", status: "inactive" }
   ];
 
-    const [error, setError] = useState(''); // Add error state
-
-
-  const handleCreateBot = async (botData) => {
-    try {
-      const user = JSON.parse(localStorage.getItem('user'));
-      if (!user || !user.id) {
-        throw new Error('User not authenticated');
-      }
-
-      const dataToSend = {
-        botName: botData.botName,
-        messages: botData.messages,
-        userId: user.id // Use the stored user ID
-      };
-
-      const response = await createAIbot(dataToSend);
-
-      if (!response) {
-        throw new Error('No response received from server');
-      }
-
-      console.log('Bot created successfully:', response);
-      setShowCreateBotModal(false);
-    } catch (err) {
-      console.error('Full error:', err);
-      console.error('Error response:', err.response);
-      setError(err.message);
-    }
-  };
-
   return (
     <div className="dashboard-container">
       <Navbar />
@@ -61,12 +25,6 @@ function Dashboard() {
       <main className="dashboard-main">
         <div className="dashboard-header">
           <h1 className="dashboard-title">Dashboard</h1>
-          <button
-            className="create-bot-button"
-            onClick={() => setShowCreateBotModal(true)}
-          >
-            Create Bot
-          </button>
         </div>
 
         <div className="stats-grid">
@@ -101,9 +59,6 @@ function Dashboard() {
             <h2>Quick Actions</h2>
             <div className="action-buttons">
               <button className="action-button">
-                <span>Create New Bot</span>
-              </button>
-              <button className="action-button">
                 <span>View Analytics</span>
               </button>
               <button className="action-button">
@@ -126,15 +81,6 @@ function Dashboard() {
             </div>
           </div>
         </div>
-
-        <CreateBotModal
-          show={showCreateBotModal}
-          onClose={() => {
-            setShowCreateBotModal(false);
-            setError('');
-          }}
-          onCreate={handleCreateBot}
-        />
       </main>
     </div>
   );

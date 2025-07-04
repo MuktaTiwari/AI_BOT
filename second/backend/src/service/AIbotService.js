@@ -15,6 +15,19 @@ class AIbotService {
             throw new Error('Error creating AI bot: ' + error.message);
         }
     }
+
+
+    async getAIbotList(userId) {
+        try {
+            const bots = await AIbotModel.findAll({
+                where: { userId: userId }
+            });
+            return bots;
+        } catch (error) {
+            console.error('Database error:', error);
+            throw new Error('Error retrieving AI bots: ' + error.message);
+        }
+    }
 }
 
 export default AIbotService;

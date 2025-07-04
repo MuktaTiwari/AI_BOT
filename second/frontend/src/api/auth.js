@@ -56,6 +56,35 @@ export const createAIbot = async (botData) => {
     }
 };
 
+
+export const getAIbotList = async (userId) => {
+  try {
+    const response = await axios.get(
+      `${API_BASE_URL}/ai/bots`,
+      {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        params: { userId }
+      }
+    );
+    
+    if (!response.data) {
+      throw new Error('Empty response from server');
+    }
+    
+    return response.data;
+  } catch (error) {
+    const errorMsg = error.response?.data?.message || 
+                    error.response?.data?.error || 
+                    error.message;
+    throw new Error(errorMsg);
+  }
+};
+
+
+
+
 // Add this interceptor to automatically add the token to requests
 axios.interceptors.request.use(config => {
     const token = localStorage.getItem('token');

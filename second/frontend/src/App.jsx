@@ -7,6 +7,7 @@ import LoginPage from './components/LoginPage'
 import Dashborad from './components/Dashborad'
 import RegisterPage from './components/RegisterPage'
 import axios from 'axios'
+import BotsList from './components/BotsList'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -26,6 +27,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/dashboard" element={<Dashborad />} />
         <Route path='/register' element = {<RegisterPage/>}/>
+        <Route path="/bots" element={<BotsList />} />
        </Routes>
     </Router>
   )
