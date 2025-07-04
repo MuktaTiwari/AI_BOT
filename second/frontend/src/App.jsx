@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import LandingPage from './components/LandingPage'
 import './App.css'
@@ -6,9 +6,18 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import LoginPage from './components/LoginPage'
 import Dashborad from './components/Dashborad'
 import RegisterPage from './components/RegisterPage'
+import axios from 'axios'
 
 function App() {
   const [count, setCount] = useState(0)
+
+  useEffect(() => {
+        // Set up axios to include token in all requests if it exists
+        const token = localStorage.getItem('token');
+        if (token) {
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        }
+    }, []);
 
   return (
     <Router>

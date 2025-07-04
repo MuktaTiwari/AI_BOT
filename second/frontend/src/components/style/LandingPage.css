@@ -4,8 +4,8 @@
     --primary-hover: #4f46e5;
     --text-color: #e2e8f0;
     --text-secondary: #94a3b8;
-    --bg-dark: #0f172a;
-    --bg-darker: #020617;
+    --bg-dark: rgba(15, 23, 42, 0.9); /* Added transparency */
+    --bg-darker: rgba(2, 6, 23, 0.9); /* Added transparency */
     --card-bg: #1e293b;
     --card-hover: #334155;
     --accent-color: #7c3aed;
@@ -17,7 +17,11 @@
     color: var(--text-color);
     line-height: 1.6;
     min-height: 100vh;
-    background-color: var(--bg-darker);
+    background: 
+        linear-gradient(rgba(2, 6, 23, 0.2), rgba(2, 6, 23, 0.2)), /* Dark overlay */
+        url('/public/assets/1.png') no-repeat center center fixed;
+    background-size: cover;
+    position: relative;
     overflow-x: hidden;
 }
 
@@ -28,9 +32,35 @@
     justify-content: space-between;
     padding: 4rem 8%;
     min-height: 100vh;
-    background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-darker) 100%);
     width: 100%;
+    position: relative;
+    z-index: 1;
 }
+
+/* Other sections - add background with transparency */
+.features-section, 
+.demo-section,
+.pricing-section,
+.landing-footer {
+    position: relative;
+    z-index: 1;
+    background-color: var(--bg-dark);
+}
+
+.features-section::before,
+.demo-section::before,
+.pricing-section::before,
+.landing-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--bg-dark);
+    z-index: -1;
+}
+
 
 .hero-content {
     flex: 1;
@@ -80,6 +110,8 @@
     margin-bottom: 2.5rem;
     color: var(--text-secondary);
     max-width: 90%;
+    text-align: left;
+
 }
 
 .cta-buttons {

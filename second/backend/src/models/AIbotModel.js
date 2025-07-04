@@ -4,28 +4,40 @@ import { sequelize } from '../config/db.js';
 
 const AIbot = sequelize.define("ai_bot", {
     id: {
-        type: DataTypes.INTEGER,  // Changed from sequelize.INTEGER
+        type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
     },
-    name: {
+     userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: 'users', // This should match your users table name
+            key: 'id'
+        }
+    },
+   botName: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    description: {
-        type: DataTypes.STRING,
-        allowNull: true,
-    },
-    model: {
-        type: DataTypes.STRING,
+    messages: {
+        type: DataTypes.JSON, // Store messages as JSON array
         allowNull: false,
     },
-    apiKey: {
-        type: DataTypes.STRING,
+    userId: {
+        type: DataTypes.INTEGER,
         allowNull: false,
+    },
+    createdAt: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+    },
+    updatedAt: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
     }
 }, {
-    tableName: "AIbots",
+    tableName: "ai_bots", // Changed to lowercase for consistency
     timestamps: true
 });
 

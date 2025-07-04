@@ -1,17 +1,20 @@
 import { Router } from 'express';
 import AuthController from '../controller/AuthController.js';
-class AuthRoutes{
-  router = Router();
-  authController = new AuthController();
+import { authenticateToken } from '../middleware/authMiddleware.js';
 
-  constructor() {
-    this.initializeRoutes();
-  }
+class AuthRoutes {
+    router = Router();
+    authController = new AuthController();
 
-initializeRoutes() {
-    this.router.post(`/signup`, this.authController.Signup.bind(this.authController));
+    constructor() {
+        this.initializeRoutes();
+    }
 
-  }
+    initializeRoutes() {
+        this.router.post(`/signup`,  this.authController.Signup.bind(this.authController));
+        this.router.post(`/login`, this.authController.Login.bind(this.authController));
+        
+    }
 }
 
 export default AuthRoutes;

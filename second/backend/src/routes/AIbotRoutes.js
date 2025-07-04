@@ -1,18 +1,23 @@
+// src/routes/AIbotRoutes.js
 import { Router } from 'express';
 import AIbotController from '../controller/AIbotController.js';
-class AIbotRoutes{
-  path = '/aibot';
-  router = Router();
-  AIbotController = new AIbotController();
+import { authenticateToken } from '../middleware/authMiddleware.js';
 
-  constructor() {
-    this.initializeRoutes();
-  }
+class AIbotRoutes {
+    router = Router();
+    AIbotController = new AIbotController();
 
-initializeRoutes() {
-    this.router.get(`${this.path}/add`, this.AIbotController.createAIbot.bind(this.AIbotController));
+    constructor() {
+        this.initializeRoutes();
+    }
 
-  }
+    initializeRoutes() {
+        this.router.post(
+            `/create`,
+            authenticateToken, // Add authentication middleware
+            this.AIbotController.createAIbot.bind(this.AIbotController)
+        );
+    }
 }
 
 export default AIbotRoutes;

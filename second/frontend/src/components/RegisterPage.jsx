@@ -26,7 +26,7 @@ function RegisterPage() {
             });
 
             console.log('Registration successful:', response.data);
-            navigate('/dashboard');
+            navigate('/login');
         } catch (error) {
             console.error('Registration failed:', error.response?.data || error.message);
             // Add error state to show user feedback
@@ -114,24 +114,7 @@ function RegisterPage() {
                                 {showPassword ? <FaEyeSlash /> : <FaEye />}
                             </button>
                         </div>
-                        <div className="password-hint">
-                            <span className="hint-text">Must be at least 8 characters</span>
-                        </div>
                     </div>
-
-                    <div className="terms-group">
-                        <input
-                            type="checkbox"
-                            id="terms"
-                            name="terms"
-                            className="terms-checkbox"
-                            required
-                        />
-                        <label htmlFor="terms" className="terms-label">
-                            I agree to the <span className="terms-link">Terms of Service</span> and <span className="terms-link">Privacy Policy</span>
-                        </label>
-                    </div>
-
                     <button
                         type="submit"
                         className="register-button"

@@ -59,23 +59,12 @@ function LandingPage() {
                         </button>
                         <button
                             className="secondary-button"
-                            onClick={() => window.scrollTo({ top: document.querySelector('.features-section').offsetTop, behavior: 'smooth' })}
+                            onClick={() => navigate("/register")}
                         >
-                            Learn More
+                           Signup
                         </button>
                     </div>
                 </div>
-                {/* <div className="hero-image">
-                    <img
-                        src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
-                        alt="AI Bot Illustration"
-                        className="hero-img"
-                        onError={(e) => {
-                            e.target.onerror = null;
-                            e.target.src = "https://images.unsplash.com/photo-1677442135136-760c813cd6f2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80";
-                        }}
-                    />
-                </div> */}
             </div>
 
             <div className="features-section">
