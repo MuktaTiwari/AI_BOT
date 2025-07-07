@@ -62,6 +62,95 @@ class AIbotController {
     }
 
 
+    async getTotalBots(req, res) {
+        try {
+            const totalBots = await this.AIbotService.getTotalBots();
+
+            if (totalBots === null) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'No AI bots found'
+                });
+            }
+
+            res.status(200).json({
+                success: true,
+                message: 'Total AI bots retrieved successfully',
+                data: totalBots
+            });
+        } catch (error) {
+            console.error('Error retrieving total AI bots:', error);
+            res.status(500).json({
+                success: false,
+                message: error.message
+            });
+        }
+    }
+
+
+    async updateAIbot(req, res) {
+        try {
+            const botId = req.params.id;
+            const updatedData = req.body;
+
+            const updatedBot = await this.AIbotService.updateAIbot(botId, updatedData);
+
+            if (!updatedBot) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'AI bot not found or update failed'
+                });
+            }
+
+            res.status(200).json({
+                success: true,
+                message: 'AI bot updated successfully',
+                data: updatedBot
+            });
+        } catch (error) {
+            console.error('Error updating AI bot:', error);
+            res.status(500).json({
+                success: false,
+                message: error.message
+            });
+        }
+    }
+
+
+    async deleteAIbot(req, res) {
+        try {
+            const botId = req.query.id;
+
+            if (!botId) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Bot ID is required'
+                });
+            }
+
+            const deleted = await this.AIbotService.deleteAIbot(botId);
+
+            if (!deleted) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'AI bot not found or deletion failed'
+                });
+            }
+
+            res.status(200).json({
+                success: true,
+                message: 'AI bot deleted successfully'
+            });
+        } catch (error) {
+            console.error('Error deleting AI bot:', error);
+            res.status(500).json({
+                success: false,
+                message: error.message
+            });
+        }
+    }
+
+
 
 }
 

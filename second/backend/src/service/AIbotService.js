@@ -28,6 +28,51 @@ class AIbotService {
             throw new Error('Error retrieving AI bots: ' + error.message);
         }
     }
+
+    async getTotalBots() {
+        try {
+            const totalBots = await AIbotModel.count();
+            return totalBots;
+        } catch (error) {
+            console.error('Database error:', error);
+            throw new Error('Error retrieving total bots: ' + error.message);
+        }
+    }
+
+
+    async updateAIbot(id, data) {
+        try {
+            const [updated] = await AIbotModel.update(data, {
+                where: { id: id }
+            });
+
+            if (updated) {
+                const updatedAIbot = await AIbotModel.findOne({ where: { id: id } });
+                return updatedAIbot;
+            }
+            throw new Error('AI bot not found');
+        } catch (error) {
+            console.error('Database error:', error);
+            throw new Error('Error updating AI bot: ' + error.message);
+        }
+    }
+
+
+    async deleteAIbot(id) {
+        try {
+            const deleted = await AIbotModel.destroy({
+                where: { id: id }
+            });
+
+            if (deleted) {
+                return { message: 'AI bot deleted successfully' };
+            }
+            throw new Error('AI bot not found');
+        } catch (error) {
+            console.error('Database error:', error);
+            throw new Error('Error deleting AI bot: ' + error.message);
+        }
+    }
 }
 
 export default AIbotService;

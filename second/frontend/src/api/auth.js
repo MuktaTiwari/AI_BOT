@@ -83,6 +83,84 @@ export const getAIbotList = async (userId) => {
 };
 
 
+export const getTotalBots = async () => {
+    try {
+        const response = await axios.get(
+            `${API_BASE_URL}/ai/total-bots`);
+        
+        if (!response.data) {
+            throw new Error('Empty response from server');
+        }
+        
+        return response.data;
+    } catch (error) {
+        const errorMsg = error.response?.data?.message || 
+                        error.response?.data?.error || 
+                        error.message;
+        throw new Error(errorMsg);
+    }
+};
+
+export const updateAIbot = async (id, botData) => {
+  try {
+    const response = await axios.put(
+      `${API_BASE_URL}/ai/update/${id}`,
+      botData,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      }
+    );
+    
+    if (response.status !== 200) {
+      throw new Error(response.data.message || 'Failed to update bot');
+    }
+    
+    return response.data;
+  } catch (error) {
+    let errorMsg = 'Failed to update bot';
+    if (error.response) {
+      errorMsg = error.response.data.message || 
+                error.response.data.error || 
+                errorMsg;
+    } else if (error.request) {
+      errorMsg = 'No response from server';
+    }
+    throw new Error(errorMsg);
+  }
+}
+
+export const deleteAIbot = async (id) => {
+    try {
+        const response = await axios.delete(
+            `${API_BASE_URL}/ai/delete?id=${id}`,
+            {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            }
+        );
+        
+        if (response.status !== 200) {
+            throw new Error(response.data.message || 'Failed to delete bot');
+        }
+        
+        return response.data;
+    } catch (error) {
+        let errorMsg = 'Failed to delete bot';
+        if (error.response) {
+            errorMsg = error.response.data.message || 
+                        error.response.data.error || 
+                        errorMsg;
+        } else if (error.request) {
+            errorMsg = 'No response from server';
+        }
+        throw new Error(errorMsg);
+    }
+};
+
 
 
 // Add this interceptor to automatically add the token to requests

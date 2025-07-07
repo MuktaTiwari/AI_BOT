@@ -2,10 +2,15 @@ import { useState } from 'react';
 import Navbar from "../layouts/navbar";
 import Sidebar from "../layouts/sidebar";
 import './style/Dashboard.css';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import {getTotalBots} from '../api/auth.js'
 
 function Dashboard() {
+  const [totalBots, setTotalBots] = useState(0);
+
   const stats = [
-    { title: "Total Bots", value: 5, change: "+2" },
+    { title: "Total Bots", value: totalBots, change: "+2" },
     { title: "Active Conversations", value: 12, change: "+5" },
     { title: "Messages Today", value: 342, change: "+28%" },
     { title: "User Satisfaction", value: "92%", change: "+3%" }
@@ -16,6 +21,24 @@ function Dashboard() {
     { name: "Sales Assistant", lastActive: "1 day ago", status: "active" },
     { name: "Tech Help", lastActive: "3 days ago", status: "inactive" }
   ];
+
+
+  
+  useEffect(() => {
+    const fetchTotalBots = async () => {
+      try {
+        const response = await getTotalBots();
+        if (response && response.data) {
+          setTotalBots(response.data);
+        } else {
+          console.error("No data received from server");
+        }
+      } catch (error) {
+        console.error("Error fetching total bots:", error); 
+      }
+    };
+    fetchTotalBots();
+  }, []);
 
   return (
     <div className="dashboard-container">

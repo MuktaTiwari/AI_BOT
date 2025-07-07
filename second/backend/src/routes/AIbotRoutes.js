@@ -14,6 +14,9 @@ class AIbotRoutes {
     initializeRoutes() {
         this.router.post(`/create`,authenticateToken, this.AIbotController.createAIbot.bind(this.AIbotController));
         this.router.get(`/bots`, authenticateToken, this.AIbotController.getAIbotList.bind(this.AIbotController));
+        this.router.get('/total-bots', this.AIbotController.getTotalBots.bind(this.AIbotController));
+        this.router.put('/update/:id', this.AIbotController.updateAIbot.bind(this.AIbotController));
+        this.router.delete('/delete?:id', this.AIbotController.deleteAIbot.bind(this.AIbotController));
     }
 }
 

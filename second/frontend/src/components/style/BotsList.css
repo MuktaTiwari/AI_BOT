@@ -145,7 +145,6 @@
 .messages-list li,
 .urls-list li {
     padding: 0.5rem 0;
-    border-bottom: 1px solid #334155;
 }
 
 .messages-list li:last-child,
@@ -165,10 +164,7 @@
     text-decoration: underline;
 }
 
-.actions-cell {
-    display: flex;
-    gap: 0.75rem;
-}
+
 
 .view-btn,
 .edit-btn,
@@ -204,6 +200,91 @@
 
 .delete-btn:hover {
     background-color: #b91c1c;
+}
+
+/* Add to your existing CSS */
+.actions-cell {
+  position: relative;
+  width: 60px;
+}
+
+.dropdown-container {
+  position: relative;
+  display: inline-block;
+  z-index: 100; /* add this */
+}
+.menu-button {
+  background: none;
+  border: none;
+  color: #cbd5e1;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.menu-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.menu-button svg {
+  display: block;
+}
+
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background-color: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  min-width: 120px;
+  overflow: visible;
+}
+
+.dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  text-align: left;
+  background: none;
+  border: none;
+  color: #e2e8f0;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.dropdown-item:hover {
+  background-color: #0f172a;
+}
+
+.dropdown-item.view-btn:hover {
+  background-color: #1d4ed8;
+}
+
+.dropdown-item.edit-btn:hover {
+  background-color: #047857;
+}
+
+.dropdown-item.delete-btn:hover {
+  background-color: #b91c1c;
+}
+
+/* Close menu when clicking outside */
+.dropdown-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9;
+  display: none;
+}
+
+.menu-open .dropdown-overlay {
+  display: block;
 }
 
 @media (max-width: 1024px) {
