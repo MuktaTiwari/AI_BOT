@@ -1,174 +1,105 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from "react";
 import Navbar from "../layouts/navbar";
 import Sidebar from "../layouts/sidebar";
-import UserModal from './UserModal';
-import { registerUser, getAllUsers } from '../api/auth';
+import { getAllUsers } from "../api/auth";
 import './style/Users.css';
 
 function UserList() {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [notification, setNotification] = useState({ show: false, message: '', type: '' });
     const [users, setUsers] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const handleCreateUser = async (userData) => {
-        try {
-            const response = await registerUser(userData);
-
-            // Refresh the user list
-            const updatedUsers = await getAllUsers();
-            setUsers(updatedUsers);
-
-            setNotification({
-                show: true,
-                message: 'User created successfully!',
-                type: 'success'
-            });
-
-            setTimeout(() => {
-                setIsModalOpen(false);
-                setNotification({ show: false, message: '', type: '' });
-            }, 2000);
-
-            return response.data;
-        } catch (error) {
-            setNotification({
-                show: true,
-                message: error.message || 'Failed to create user',
-                type: 'error'
-            });
-            throw error;
-        }
-    };
-
     useEffect(() => {
-        const fetchAllUsers = async () => {
+        const fetchUsers = async () => {
             try {
-                console.log('Fetching users...');
-                const userData = await getAllUsers();
-                console.log('Received users data:', userData);
-                
-                if (!userData || !Array.isArray(userData)) {
-                    console.error('Invalid users data format:', userData);
-                    throw new Error('Invalid users data format');
+                const usersData = await getAllUsers();
+                // Ensure we're working with the data array
+                if (Array.isArray(usersData)) {
+                    setUsers(usersData);
+                } else if (usersData?.data && Array.isArray(usersData.data)) {
+                    // Handle case where response is {success, data, message}
+                    setUsers(usersData.data);
+                } else {
+                    throw new Error('Unexpected data format received');
                 }
-                
-                setUsers(userData);
-                setError(null);
-            } catch (err) {
-                console.error('Detailed error in fetchAllUsers:', {
-                    message: err.message,
-                    stack: err.stack,
-                    response: err.response
-                });
-                setError(err.message || 'Failed to fetch users');
-                setNotification({
-                    show: true,
-                    message: 'Failed to fetch users',
-                    type: 'error'
-                });
+            } catch (error) {
+                console.error('Error fetching users:', error);
+                setError(error.message);
             } finally {
-                setIsLoading(false);
+                setLoading(false);
             }
-        };
+        }
 
-        fetchAllUsers();
+        fetchUsers();
     }, []);
+
+    // Helper function to safely display ID
+    const formatId = (id) => {
+        if (!id) return 'N/A';
+        const idStr = String(id); // Ensure it's a string
+        return idStr.length > 8 ? `${idStr.substring(0, 8)}...` : idStr;
+    };
 
     return (
         <div className="app-container">
             <Navbar />
+            
             <div className="main-content">
                 <Sidebar />
+                
                 <div className="content-area">
-                    <div className="users-header">
-                        <h1>User Management</h1>
-
-                        <div>
-
-                        <button
-                            className="create-user-button"
-                            onClick={() => setIsModalOpen(true)}
-                            >
-                            Add New User
-                        </button>
-                            </div>
+                    <div className="user-list-header">
+                        <h1 className="user-list-title">User List</h1>
+                        <p className="user-list-subtitle">Manage your users here</p>
                     </div>
-
-                    {isLoading ? (
-                        <div className="loading-spinner">
-                            <div className="spinner"></div>
-                            <p>Loading users...</p>
-                        </div>
-                    ) : error ? (
-                        <div className="error-message">{error}</div>
-                    ) : (
-                        <div className="users-table-container">
-                            <table className="users-table">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Phone</th>
-                                        <th>Role</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {users.length > 0 ? (
-                                        users.map(user => (
-                                            <tr key={user._id} className="user-row">
+                    
+                    <div className="user-list-content">
+                        {loading ? (
+                            <div className="loading">Loading users...</div>
+                        ) : error ? (
+                            <div className="error">Error: {error}</div>
+                        ) : users.length === 0 ? (
+                            <div className="no-users">
+                                <p>No users found</p>
+                            </div>
+                        ) : (
+                            <div className="users-table-container">
+                                <table className="users-table">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Phone</th>
+                                            <th>User Type</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {users.map((user) => (
+                                            <tr key={user._id || user.id}>
+                                                <td>{formatId(user._id || user.id)}</td>
+                                                <td>{user.firstName || ''} {user.lastName || ''}</td>
+                                                <td>{user.email || 'N/A'}</td>
+                                                <td>{user.mobileNo || 'N/A'}</td>
+                                                <td>{user.userType || 'N/A'}</td>
+                                               
                                                 <td>
-                                                    <div className="user-avatar-name">
-                                                        <span className="user-avatar">
-                                                            {user.firstName?.charAt(0)}{user.lastName?.charAt(0)}
-                                                        </span>
-                                                        {user.firstName} {user.lastName}
-                                                    </div>
-                                                </td>
-                                                <td>{user.email}</td>
-                                                <td>{user.mobileNo}</td>
-                                                <td>
-                                                    <span className={`role-badge ${user.userType}`}>
-                                                        {user.userType}
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    <div className="user-actions">
+                                                    <div className="action-buttons">
+                                                        <button className="view-btn">View</button>
                                                         <button className="edit-btn">Edit</button>
                                                         <button className="delete-btn">Delete</button>
                                                     </div>
                                                 </td>
                                             </tr>
-                                        ))
-                                    ) : (
-                                        <tr className="no-users-row">
-                                            <td colSpan="5">
-                                                <div className="no-users-message">
-                                                    No users found. Create your first user!
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>
-                    )}
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
-
-            <UserModal
-                show={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
-                onCreate={handleCreateUser}
-            />
-
-            {notification.show && (
-                <div className={`notification ${notification.type}`}>
-                    {notification.message}
-                </div>
-            )}
         </div>
     );
 }
