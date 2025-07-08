@@ -13,6 +13,8 @@ class AuthRoutes {
     initializeRoutes() {
         this.router.post(`/signup`,  this.authController.Signup.bind(this.authController));
         this.router.post(`/login`, this.authController.Login.bind(this.authController));
+
+        this.router.get('/user', this.authController.getAllUsers.bind(this.authController));
         
     }
 }

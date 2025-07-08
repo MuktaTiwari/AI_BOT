@@ -12,7 +12,7 @@ const AIbot = sequelize.define("ai_bot", {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'users', // This should match your users table name
+            model: 'users', 
             key: 'id'
         }
     },

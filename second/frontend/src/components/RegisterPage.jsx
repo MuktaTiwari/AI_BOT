@@ -23,6 +23,7 @@ function RegisterPage() {
                 email: e.target.email.value,
                 mobileNo: e.target.mobileNo.value,
                 password: e.target.password.value,
+                userType: 'admin'
             });
 
             console.log('Registration successful:', response.data);

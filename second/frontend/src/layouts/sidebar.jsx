@@ -25,9 +25,9 @@ function Sidebar() {
           <span>My Bots</span>
         </NavLink>
 
-        <NavLink to="/analytics" className="sidebar-link">
+        <NavLink to="/userlist" className="sidebar-link">
           <FaChartLine className="sidebar-icon" />
-          <span>Analytics</span>
+          <span>User List</span>
         </NavLink>
 
         <NavLink to="/conversations" className="sidebar-link">

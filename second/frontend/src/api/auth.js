@@ -161,6 +161,44 @@ export const deleteAIbot = async (id) => {
     }
 };
 
+export const getAllUsers = async () => {
+    try {
+        const response = await axios.get(
+            `${API_BASE_URL}/auth/user`,
+            {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            }
+        );
+        
+        console.log('API Response:', response.data); // Log the actual response
+        
+        if (!response.data) {
+            throw new Error('Empty response from server');
+        }
+        
+        // The response has { success: true, data: [...] } structure
+        if (response.data.success && Array.isArray(response.data.data)) {
+            return response.data.data.map(user => ({
+                _id: user.id,  // Map 'id' to '_id'
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                mobileNo: user.mobileNo,
+                userType: user.userType
+            }));
+        }
+        
+        throw new Error('Unexpected response format from server');
+    } catch (error) {
+        console.error('Error in getAllUsers:', error);
+        const errorMsg = error.response?.data?.message || 
+                        error.response?.data?.error || 
+                        error.message;
+        throw new Error(errorMsg);
+    }
+}
 
 
 // Add this interceptor to automatically add the token to requests

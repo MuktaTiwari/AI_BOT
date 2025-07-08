@@ -8,6 +8,7 @@ import Dashborad from './components/Dashborad'
 import RegisterPage from './components/RegisterPage'
 import axios from 'axios'
 import BotsList from './components/BotsList'
+import UserList from './components/Users'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -28,6 +29,7 @@ function App() {
         <Route path="/dashboard" element={<Dashborad />} />
         <Route path='/register' element = {<RegisterPage/>}/>
         <Route path="/bots" element={<BotsList />} />
+        <Route path="/userlist" element={<UserList/>} />
        </Routes>
     </Router>
   )
