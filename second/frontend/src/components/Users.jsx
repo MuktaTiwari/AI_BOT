@@ -33,26 +33,21 @@ function UserList() {
         fetchUsers();
     }, []);
 
-    // Helper function to safely display ID
-    const formatId = (id) => {
-        if (!id) return 'N/A';
-        const idStr = String(id); // Ensure it's a string
-        return idStr.length > 8 ? `${idStr.substring(0, 8)}...` : idStr;
-    };
+
 
     return (
         <div className="app-container">
             <Navbar />
-            
+
             <div className="main-content">
                 <Sidebar />
-                
-                <div className="content-area">
-                    <div className="user-list-header">
-                        <h1 className="user-list-title">User List</h1>
-                        <p className="user-list-subtitle">Manage your users here</p>
+
+                <div className="user-content-area">
+                    <div>
+                        <h1>User List</h1>
+                        <p>Manage your users here</p>
                     </div>
-                    
+
                     <div className="user-list-content">
                         {loading ? (
                             <div className="loading">Loading users...</div>
@@ -71,7 +66,9 @@ function UserList() {
                                             <th>Email</th>
                                             <th>Phone</th>
                                             <th>User Type</th>
-                                            <th>Actions</th>
+                                            <th>View</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -81,13 +78,16 @@ function UserList() {
                                                 <td>{user.email || 'N/A'}</td>
                                                 <td>{user.mobileNo || 'N/A'}</td>
                                                 <td>{user.userType || 'N/A'}</td>
-                                               
+
                                                 <td>
-                                                    <div className="action-buttons">
-                                                        <button className="view-btn">View</button>
-                                                        <button className="edit-btn">Edit</button>
-                                                        <button className="delete-btn">Delete</button>
-                                                    </div>
+                                                    <button className="view-btn">View</button>
+                                                </td>
+
+                                                <td>
+                                                    <button className="edit-btn">Edit</button>
+                                                </td>
+                                                <td>
+                                                    <button  className="delete-btn  delete">Delete</button>
                                                 </td>
                                             </tr>
                                         ))}
