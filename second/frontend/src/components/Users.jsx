@@ -67,7 +67,6 @@ function UserList() {
                                 <table className="users-table">
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
                                             <th>Name</th>
                                             <th>Email</th>
                                             <th>Phone</th>
@@ -78,7 +77,6 @@ function UserList() {
                                     <tbody>
                                         {users.map((user) => (
                                             <tr key={user._id || user.id}>
-                                                <td>{formatId(user._id || user.id)}</td>
                                                 <td>{user.firstName || ''} {user.lastName || ''}</td>
                                                 <td>{user.email || 'N/A'}</td>
                                                 <td>{user.mobileNo || 'N/A'}</td>
