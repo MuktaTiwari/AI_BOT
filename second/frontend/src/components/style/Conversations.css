@@ -1,0 +1,72 @@
+.conversations-container {
+  display: flex;
+  flex-direction: row;
+  min-height: 93vh;
+  background: linear-gradient(135deg, #232526 0%, #414345 100%);
+  padding-left: 220px;
+  padding-top: 80px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.conversations-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  padding: 32px 40px;
+  margin-left: 200px;
+}
+
+.conversations-content h1 {
+  color: #fff;
+  font-size: 2.5rem;
+  margin-bottom: 24px;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+.bot-select-container {
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 20px;
+}
+
+.select-bot {
+  width: 100%;
+  padding: 12px 20px;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  border: 1.5px solid #444;
+  background: #fff;
+  color: #232526;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.select-bot:focus {
+  border: 2px solid #007bff;
+  outline: none;
+  box-shadow: 0 0 0 2px #007bff33;
+}
+
+.instructions {
+  color: #aaa;
+  font-size: 1rem;
+  margin-top: 10px;
+}
+
+.loading {
+  color: #fff;
+  font-size: 1.2rem;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.error {
+  color: #ff6b6b;
+  font-size: 1.2rem;
+  text-align: center;
+  margin-top: 20px;
+}

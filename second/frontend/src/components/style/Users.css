@@ -8,13 +8,45 @@
     width: calc(100% - 250px);
 }
 
-.user-content-area h1{
+.user-content-area h1 {
     color: white;
     font-size: 2.5rem;
     margin-top: 50px;
 
 }
 
+
+
+.user-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 70px;
+    margin-left: 61px;
+    margin-right: 50px;
+}
+
+.user-header-row h1 {
+    margin: 0;
+}
+
+.user-header-row p {
+    margin: 4px 0 0 0;
+}
+
+.user-header-row button {
+    height: 40px;
+    padding: 0 16px;
+    font-size: 16px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
 
 
 .users-table-container {
@@ -103,10 +135,10 @@
     color: white;
     border-radius: 8px;
     width: 80%;
-    
+
 }
 
-.delete{
+.delete {
     width: 60%;
 }
 
@@ -148,7 +180,7 @@
         width: 100%;
         padding: 0.5rem;
     }
-    
+
     .users-table th,
     .users-table td {
         padding: 0.75rem;

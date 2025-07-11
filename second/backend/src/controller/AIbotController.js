@@ -61,6 +61,32 @@ class AIbotController {
         }
     }
 
+    async getAllAIBot(req, res) {
+
+        try {
+
+            const bots = await this.AIbotService.getAllAIBot();
+            if (!bots || bots.length === 0) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'No AI bots found for this user'
+                });
+            }
+
+            res.status(200).json({
+                success: true,
+                message: 'AI bots retrieved successfully',
+                data: bots
+            });
+        } catch (error) {
+            console.error('Error retrieving AI bots:', error);
+            res.status(500).json({
+                success: false,
+                message: error.message
+            });
+        }
+    }
+
 
     async getTotalBots(req, res) {
         try {

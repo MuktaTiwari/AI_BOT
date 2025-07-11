@@ -10,12 +10,23 @@ import {
 import '../components/style/Sidebar.css'
 function Sidebar() {
   const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem('user'));
+  const userType = user?.userType;
 
   return (
     <div className="sidebar">
 
       <nav className="sidebar-nav">
-        <NavLink to="/dashboard" className="sidebar-link">
+        {userType === 'user' ? (
+          <NavLink to="/conversations" className="sidebar-link">
+          <FaComments className="sidebar-icon" />
+          <span>Conversations</span>
+        </NavLink>
+        ) : (
+
+          <>
+
+          <NavLink to="/dashboard" className="sidebar-link">
           <FaHome className="sidebar-icon" />
           <span>Dashboard</span>
         </NavLink>
@@ -30,24 +41,23 @@ function Sidebar() {
           <span>User List</span>
         </NavLink>
 
-        <NavLink to="/conversations" className="sidebar-link">
+         <NavLink to="/conversations" className="sidebar-link">
           <FaComments className="sidebar-icon" />
           <span>Conversations</span>
         </NavLink>
 
+        
         <NavLink to="/settings" className="sidebar-link">
           <FaCog className="sidebar-icon" />
           <span>Settings</span>
         </NavLink>
+
+        </>
+        )}
+        
       </nav>
 
-      <button
-        className="sidebar-create-btn"
-        onClick={() => navigate('/create-bot')}
-      >
-        <FaPlus />
-        <span>Create New Bot</span>
-      </button>
+     
     </div>
   );
 }

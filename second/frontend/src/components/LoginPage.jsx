@@ -42,12 +42,20 @@ function LoginPage() {
                 id: user.id,
                 email: user.email,
                 firstName: user.firstName,
-                lastName: user.lastName
+                lastName: user.lastName,
+                userType: user.userType
             }));
 
             // Set default Authorization header
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            navigate('/dashboard');
+
+            if (user.userType === 'user') {
+                navigate('/conversations');
+            }
+            else {
+
+                navigate('/dashboard');
+            }
         } catch (err) {
             setError(err.message || 'Login failed. Please try again.');
         } finally {

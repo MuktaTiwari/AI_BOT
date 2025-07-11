@@ -1,0 +1,33 @@
+.chat-page-container {
+  display: flex;
+  flex-direction: row;
+  min-height: 93vh;
+  background: linear-gradient(135deg, #232526 0%, #414345 100%);
+  padding-left: 220px;
+  padding-top: 80px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.chat-page-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 32px 40px;
+}
+
+.loading {
+  color: #fff;
+  font-size: 1.2rem;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.error {
+  color: #ff6b6b;
+  font-size: 1.2rem;
+  text-align: center;
+  margin-top: 20px;
+}

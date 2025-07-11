@@ -17,6 +17,7 @@ class AIbotRoutes {
         this.router.get('/total-bots', this.AIbotController.getTotalBots.bind(this.AIbotController));
         this.router.put('/update/:id', this.AIbotController.updateAIbot.bind(this.AIbotController));
         this.router.delete('/delete?:id', this.AIbotController.deleteAIbot.bind(this.AIbotController));
+        this.router.get('/getall', this.AIbotController.getAllAIBot.bind(this.AIbotController));
     }
 }
 

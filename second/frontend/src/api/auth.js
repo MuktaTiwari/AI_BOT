@@ -1,7 +1,7 @@
 // src/api/auth.js
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:5000';
+const API_BASE_URL = 'http://localhost:8080';
 
 export const registerUser = async (userData) => {
     return await axios.post(`${API_BASE_URL}/auth/signup`, userData, {
@@ -82,6 +82,24 @@ export const getAIbotList = async (userId) => {
   }
 };
 
+
+ export const getAllAIBot =  async ()=>{
+
+    try
+    {
+        const response = await axios.get(`${API_BASE_URL}/ai/getall`);
+    if (!response.data) {
+            throw new Error('Empty response from server');
+        }
+        
+        return response.data;
+    } catch (error) {
+        const errorMsg = error.response?.data?.message || 
+                        error.response?.data?.error || 
+                        error.message;
+        throw new Error(errorMsg);
+    }
+};
 
 export const getTotalBots = async () => {
     try {
@@ -181,7 +199,7 @@ export const getAllUsers = async () => {
         // The response has { success: true, data: [...] } structure
         if (response.data.success && Array.isArray(response.data.data)) {
             return response.data.data.map(user => ({
-                _id: user.id,  // Map 'id' to '_id'
+                _id: user.id,
                 firstName: user.firstName,
                 lastName: user.lastName,
                 email: user.email,

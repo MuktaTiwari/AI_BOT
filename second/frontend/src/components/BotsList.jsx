@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getAIbotList, createAIbot,updateAIbot , deleteAIbot } from '../api/auth';
+import { getAIbotList, createAIbot, updateAIbot, deleteAIbot } from '../api/auth';
 import Navbar from '../layouts/navbar';
 import Sidebar from '../layouts/sidebar';
 import CreateBotModal from './CreateBotModal';
@@ -112,18 +112,18 @@ function BotsList() {
     } else {
       setError('Bot not found');
     }
-    
+
   };
 
   const handleDeleteBot = async () => {
     try {
       const user = JSON.parse(localStorage.getItem('user'));
-      if (!user || !user.id) {  
+      if (!user || !user.id) {
         throw new Error('User not authenticated');
       }
       const response = await deleteAIbot(selectedBot.id, {
         userId: user.id
-      }); 
+      });
       console.log('Bot deleted successfully:', response);
       setShowDeleteModal(false);
       fetchBots(); // Refresh the bot list
@@ -142,17 +142,17 @@ function BotsList() {
   };
 
   useEffect(() => {
-  const handleClickOutside = (e) => {
-    if (menuOpen && !e.target.closest('.dropdown-container')) {
-      closeMenu();
-    }
-  };
+    const handleClickOutside = (e) => {
+      if (menuOpen && !e.target.closest('.dropdown-container')) {
+        closeMenu();
+      }
+    };
 
-  document.addEventListener('mousedown', handleClickOutside);
-  return () => {
-    document.removeEventListener('mousedown', handleClickOutside);
-  };
-}, [menuOpen]);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [menuOpen]);
 
   return (
     <div className="app-container">
@@ -193,7 +193,9 @@ function BotsList() {
                       <th>Bot Name</th>
                       <th>Messages</th>
                       <th>URLs</th>
-                      <th>Actions</th>
+                      <th>View</th>
+                      <th>Edit</th>
+                      <th>Delete</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -222,43 +224,29 @@ function BotsList() {
                             </ul>
                           ) : 'No URLs'}
                         </td>
-                        <td className="actions-cell">
-                          <div className="dropdown-container">
-                            <button
-                              className="menu-button"
-                              onClick={() => toggleMenu(bot.id)}
-                              aria-label="Actions"
-                            >
-                              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="12" cy="6" r="1.5" fill="currentColor" />
-                                <circle cx="12" cy="12" r="1.5" fill="currentColor" />
-                                <circle cx="12" cy="18" r="1.5" fill="currentColor" />
-                              </svg>
-                            </button>
-
-                            {menuOpen === bot.id && (
-                              <div className="dropdown-menu">
-                                <button
-                                  className="dropdown-item view-btn"
-                                  onClick={() => handleView(bot.id)}
-                                >
-                                  View
-                                </button>
-                                <button
-                                  className="dropdown-item edit-btn"
-                                  onClick={() => handleEdit(bot.id)}
-                                >
-                                  Edit
-                                </button>
-                                <button
-                                  className="dropdown-item delete-btn"
-                                  onClick={() => handleDelete(bot.id)}
-                                >
-                                  Delete
-                                </button>
-                              </div>
-                            )}
-                          </div>
+                        <td>
+                          <button
+                            className="view-btn"
+                            onClick={() => handleView(bot.id)}
+                          >
+                            View
+                          </button>
+                        </td>
+                        <td>
+                          <button
+                            className="edit-btn"
+                            onClick={() => handleEdit(bot.id)}
+                          >
+                            Edit
+                          </button>
+                        </td>
+                        <td>
+                          <button
+                            className="delete-btn"
+                            onClick={() => handleDelete(bot.id)}
+                          >
+                            Delete
+                          </button>
                         </td>
                       </tr>
                     ))}
@@ -290,12 +278,12 @@ function BotsList() {
         onUpdate={handleUpdateBot}
       />
 
-      <DeleteConfirmationModal 
+      <DeleteConfirmationModal
         show={showDeleteModal}
         onClose={() => setShowDeleteModal(false)}
         onConfirm={handleDeleteBot}
         botName={selectedBot ? selectedBot.botName : ''}
-      
+
       />
 
 

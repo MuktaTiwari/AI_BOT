@@ -17,7 +17,7 @@ class AuthService {
             const hashedPassword = await bcrypt.hash(userData.password, 10);
             const newUser = await UserModel.create({
                 ...userData,
-                userType: userData.userType || 'user',
+                userType: userData.userType,
                 password: hashedPassword
             });
 
@@ -65,6 +65,7 @@ class AuthService {
                 email: user.email,
                 firstName: user.firstName,
                 lastName: user.lastName,
+                userType: user.userType,
                 // Add other fields you need
             };
 
@@ -82,6 +83,7 @@ class AuthService {
     async getAllUsers() {
         try {
             const users = await UserModel.findAll({
+                where: { userType: 'user' },
                 attributes: ['id', 'firstName', 'lastName', 'email', 'mobileNo', 'userType']
             });
 

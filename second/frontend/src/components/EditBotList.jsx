@@ -123,15 +123,6 @@ const EditBotModal = ({ show, bot, onClose, onUpdate }) => {
                         </button>
                     </div>
 
-                    <div className="form-group">
-                        <label>Created At</label>
-                        <input
-                            type="text"
-                            value={new Date(bot?.createdAt).toLocaleString()}
-                            readOnly
-                            disabled
-                        />
-                    </div>
 
                     <div className="modal-actions">
                         <button

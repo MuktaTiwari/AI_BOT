@@ -29,6 +29,19 @@ class AIbotService {
         }
     }
 
+    async getAllAIBot(){
+        try{
+
+            const bots = await AIbotModel.findAll();
+
+            return bots;
+        }
+         catch (error) {
+            console.error('Database error:', error);
+            throw new Error('Error retrieving AI bots: ' + error.message);
+        }
+    }
+
     async getTotalBots() {
         try {
             const totalBots = await AIbotModel.count();
